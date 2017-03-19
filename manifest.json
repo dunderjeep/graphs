@@ -1,0 +1,7 @@
+{
+  "name": "graphs",
+  "short_name": "graphs",
+  "description": "graphs",
+  "start_url": "/",
+  "display": "standalone"
+}
