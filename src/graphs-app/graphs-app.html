@@ -1,28 +1,53 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 <dom-module id="graphs-app">
   <template>
+    <firebase-app
+      name="graphs"
+      api-key="AIzaSyC1GizI5R8D7nMzy9jXGAHXTveU4w9IL4A"
+      auth-domain="graphs-e23a2.firebaseapp.com"
+      database-url="https://graphs-e23a2.firebaseio.com">
+    </firebase-app>
+    <firebase-auth
+      id="auth"
+      app-name="graphs"
+      provider="google"
+      user="{{user}}"
+      status-known="{{statusKnown}}">
+    </firebase-auth>
     <style>
       :host {
         display: block;
       }
     </style>
-    <h2>Hello [[prop1]]</h2>
+    <h2>[[prop1]]</h2>
+    <paper-button raised on-tap="signin" hidden$="[[user]]">Sign In</paper-button>
+    <paper-button raised on-tap="signout" hidden$="[[!user]]">Sign Out</paper-button>
   </template>
 
   <script>
-    class MyApplication extends Polymer.Element {
+    class GraphsApp extends Polymer.Element {
       static get is() { return 'graphs-app'; }
       static get properties() {
         return {
           prop1: {
             type: String,
-            value: 'graphs-app'
+            value: 'Graphs'
           }
         };
       }
+      signin() {
+        return this.$.auth.signInWithPopup();
+      }
+
+      signout() {
+        return this.$.auth.signOut();
+      }
     }
 
-    window.customElements.define(MyApplication.is, MyApplication);
+    window.customElements.define(GraphsApp.is, GraphsApp);
   </script>
 </dom-module>
