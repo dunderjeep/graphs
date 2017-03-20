@@ -1,7 +1,10 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 <dom-module id="graphs-app">
   <template>
@@ -26,8 +29,19 @@
     <h2>[[prop1]]</h2>
     <paper-button raised on-tap="signin" hidden$="[[user]]">Sign In</paper-button>
     <paper-button raised on-tap="signout" hidden$="[[!user]]">Sign Out</paper-button>
+    <firebase-query
+      id="query"
+      app-name="graphs"
+      path="/users/[[user.uid]]/nodes"
+      data="{{nodes}}">
+    </firebase-query>
+    <ul id="nodes-list">
+      <template is="dom-repeat" items="[[nodes]]" as="node">
+        <li><paper-input>[[node.title]]</paper-input></li>
+      </template>
+    </ul>
+    <paper-button raised on-tap="add">Add Node</paper-button>
   </template>
-
   <script>
     class GraphsApp extends Polymer.Element {
       static get is() { return 'graphs-app'; }
@@ -36,9 +50,18 @@
           prop1: {
             type: String,
             value: 'Graphs'
+          },
+          nodes: {
+            type: Object
           }
         };
       }
+      add() {
+        this.$.query.ref.push({
+          'title': 'one'
+        });
+      }
+
       signin() {
         return this.$.auth.signInWithPopup();
       }
