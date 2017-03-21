@@ -4,7 +4,6 @@
 <link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 <dom-module id="graphs-app">
   <template>
@@ -37,7 +36,7 @@
     </firebase-query>
     <ul id="nodes-list">
       <template is="dom-repeat" items="[[nodes]]" as="node">
-        <li><paper-input>[[node.title]]</paper-input></li>
+        <li>[[node.title]]</li>
       </template>
     </ul>
     <paper-button raised on-tap="add">Add Node</paper-button>
