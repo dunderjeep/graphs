@@ -5,7 +5,8 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0-rc.2",
     "polymerfire": "^0.10.3",
-    "paper-button": "PolymerElements/paper-button#2.0-preview"
+    "paper-button": "PolymerElements/paper-button#2.0-preview",
+    "d3": "^4.7.3"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#2.0-preview",
