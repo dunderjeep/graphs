@@ -1,0 +1,59 @@
+<dom-module id="graph-nodes">
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+      svg {
+        border: 1px solid #888;
+      }
+    </style>
+      <h3>Nodes</h3>
+    <svg id="svg"></svg>
+    <ul id="nodes-list">
+      <template is="dom-repeat" items="[[nodes]]" as="node">
+        <li>[[node.title]]</li>
+      </template>
+    </ul>
+  </template>
+  <script>
+    class GraphNodes extends Polymer.Element {
+
+      static get is() { return 'graph-nodes'; }
+      static get properties() {
+        return {
+          nodes: {
+            type: Object,
+            observer: '_nodesChanged'
+          },
+          links: {
+            type: Object
+          }
+        };
+      }
+
+      _nodesChanged(newValue, oldValue) {
+        if (this.d3) {
+          var test = this.d3.select(this.svg)
+          .attr("width", 960)
+          .attr("height", 500)
+          .attr("class", "svg");
+          debugger;
+        }
+
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        this.svg = this.$.svg;
+        this.d3 = window.d3;
+      }
+
+    }
+
+
+    window.customElements.define(GraphNodes.is, GraphNodes);
+  </script>
+</dom-module>
