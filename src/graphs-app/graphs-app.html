@@ -26,17 +26,16 @@
         display: block;
       }
     </style>
-    <h2>[[prop1]]</h2>
-    <paper-button raised on-tap="signin" hidden$="[[user]]">Sign In</paper-button>
-    <paper-button raised on-tap="signout" hidden$="[[!user]]">Sign Out</paper-button>
     <firebase-query
       id="query"
       app-name="graphs"
       path="/users/[[user.uid]]/nodes"
       data="{{nodes}}">
     </firebase-query>
-    <paper-button raised on-tap="add">Add Node</paper-button>
     <graph-nodes nodes="{{nodes}}" links="{{links}}"></graph-nodes>
+    <paper-button raised on-tap="add">Add Node</paper-button>
+    <paper-button raised on-tap="signin" hidden$="[[user]]">Sign In</paper-button>
+    <paper-button raised on-tap="signout" hidden$="[[!user]]">Sign Out</paper-button>
   </template>
   <script>
     class GraphsApp extends Polymer.Element {
