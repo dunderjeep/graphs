@@ -11,14 +11,20 @@
         <li>[[node.title]]</li>
       </template>
     </ul>
+    <svg id="svg">
+      <g id="nodes"></g>
+      <g id="links"></g>
+    </svg>
   </template>
   <script>
     class GraphNodes extends Polymer.Element {
+
       static get is() { return 'graph-nodes'; }
       static get properties() {
         return {
           nodes: {
-            type: Object
+            type: Object,
+            observer: '_nodesChanged'
           },
           links: {
             type: Object
@@ -26,7 +32,24 @@
         };
       }
 
+      _nodesChanged(newValue, oldValue) {
+        if (this.d3) {
+          var test = this.d3.select(this.svg);
+          debugger;
+        }
+
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        console.log('connectedCallback');
+        var svg = this.$.svg;
+        this.d3 = window.d3;
+
+      }
+
     }
+
 
     window.customElements.define(GraphNodes.is, GraphNodes);
   </script>
