@@ -8,10 +8,13 @@
 
       svg {
         border: 1px solid #888;
+        width: 960px;
+        height: 500px;
+        pointer-events: all;
       }
     </style>
       <h3>Nodes</h3>
-    <svg id="svg"></svg>
+    <svg id="svg" class="svg" on-dblclick="dblclick"></svg>
     <ul id="nodes-list">
       <template is="dom-repeat" items="[[nodes]]" as="node">
         <li>[[node.title]]</li>
@@ -35,24 +38,37 @@
       }
 
       _nodesChanged(newValue, oldValue) {
-        if (this.d3) {
-          var test = this.d3.select(this.svg)
-          .attr("width", 960)
-          .attr("height", 500)
-          .attr("class", "svg");
-          debugger;
-        }
+        if (oldValue && this.d3) this.update(newValue, oldValue);
+      }
 
+      update(newValue, oldValue){
+        console.log(newValue, oldValue);
+        //this.svg.data(newValue);
+      }
+
+      dblclick() {
+
+        var point = this.d3.mouse(this);
+                console.log("dblclick", this.d3, this);
+			}
+
+      foo() {
+        console.log("fffffffffffffffffffffffffff");
       }
 
       connectedCallback() {
         super.connectedCallback();
-        this.svg = this.$.svg;
+
+      }
+
+      ready() {
+        super.ready();
         this.d3 = window.d3;
+        this.svg = this.d3.select(this.$.svg);
+        //this.svg.on("dblclick", this.dblclick());
       }
 
     }
-
 
     window.customElements.define(GraphNodes.is, GraphNodes);
   </script>
