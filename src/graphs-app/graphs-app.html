@@ -4,7 +4,6 @@
 <link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="graph-nodes.html">
 
 <dom-module id="graphs-app">
   <template>
@@ -25,6 +24,15 @@
       :host {
         display: block;
       }
+      svg {
+        border: 1px solid #888;
+        width: 960px;
+        height: 500px;
+        pointer-events: all;
+      }
+      circle {
+        r: 3;
+      }
     </style>
     <firebase-query
       id="query"
@@ -32,29 +40,112 @@
       path="/users/[[user.uid]]/nodes"
       data="{{nodes}}">
     </firebase-query>
-    <graph-nodes nodes="{{nodes}}" links="{{links}}"></graph-nodes>
-    <paper-button raised on-tap="add">Add Node</paper-button>
-    <paper-button raised on-tap="signin" hidden$="[[user]]">Sign In</paper-button>
-    <paper-button raised on-tap="signout" hidden$="[[!user]]">Sign Out</paper-button>
+    <svg id="svg" class="svg"></svg>
+    <div>
+      <paper-button raised on-tap="signin" hidden$="[[user]]">Sign In</paper-button>
+      <paper-button raised on-tap="signout" hidden$="[[!user]]">Sign Out</paper-button>
+    </div>
+    <ul id="nodes-list">
+      <template is="dom-repeat" items="[[nodes]]" as="node">
+        <li>[[node.x]], [[node.y]]</li>
+      </template>
+    </ul>
   </template>
   <script>
     class GraphsApp extends Polymer.Element {
       static get is() { return 'graphs-app'; }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'Graphs'
-          },
           nodes: {
-            type: Object
+            type: Array
           }
         };
       }
-      add() {
+
+      static get observers() {
+        return [
+          '_nodesChanged(nodes.splices)'
+        ]
+      }
+
+      _nodesChanged(e) {
+        if (e) {
+          this.simulation.data(this.nodes);
+          this.node = this.node.data(this.nodes);
+          this.node.exit().remove();
+          var nodeEnter = this.node.enter()
+            .append("g")
+            .attr("class", "node");
+          nodeEnter.append("circle")
+            .attr("fill", "black");
+          nodeEnter.call(d3.drag()
+                 .on("start", this.dragstarted.bind(this))
+                 .on("drag", this.dragged.bind(this))
+                 .on("end", this.dragended.bind(this)));
+          this.node = this.node.merge(nodeEnter);
+          console.log('graphs-app: ', this.node);
+        }
+
+      }
+
+      dblclick() {
+        var point = d3.mouse(this);
         this.$.query.ref.push({
-          'title': 'one'
+          x: point[0], y: point[1]
         });
+      }
+
+      dragstarted(d) {
+        //d3.select(this).raise().classed("active", true);
+        if (!d3.event.active) this.simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+      }
+
+      dragged(d) {
+        d3.select(this).select("g").attr("cx", d.fx = d3.event.x).attr("cy", d.fy = d3.event.y);
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+      }
+
+      dragended(d) {
+        //d3.select(this).classed("active", false);
+        if (!d3.event.active) this.simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+      }
+
+      ready() {
+        super.ready();
+        this.svg = d3.select(this.$.svg).on("dblclick", this.dblclick.bind(this));
+        this.node = this.svg.append("g").attr("class", "nodes").selectAll(".node");
+        this.simulation = d3.forceSimulation(this.nodes)
+          .force("charge", d3.forceManyBody().strength(-10))
+          .force("link", d3.forceLink()
+                          .id(function(d) { return d.__firebaseKey__; })
+                          .distance(100))
+          .on("tick", this.ticked.bind(this));
+      }
+
+      ticked() {
+        this.node.select("circle")
+          .attr("cx", function(d) { return d.x; })
+          .attr("cy", function(d) { return d.y; });
+
+        console.log("ticked");
+        // node.select("path")
+        //   .data(voronoi.polygons(node.data()))
+        //   .attr("d", function(d) { return d == null ? null : "M" + d.join("L") + "Z"; });
+        //
+        // node.select("text")
+        //   .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")" });
+        //
+        // svg.selectAll(".link")
+        //   .attr("x1",function(d) { return d.source.x; } )
+        //   .attr("y1", function(d) { return d.source.y; })
+        //   .attr("x2", function(d) { return d.target.x; })
+        //   .attr("y2", function(d) { return d.target.y; });
+
       }
 
       signin() {
