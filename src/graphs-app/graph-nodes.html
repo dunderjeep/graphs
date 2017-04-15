@@ -14,10 +14,10 @@
       }
     </style>
       <h3>Nodes</h3>
-    <svg id="svg" class="svg" on-dblclick="dblclick"></svg>
+    <svg id="svg" class="svg"></svg>
     <ul id="nodes-list">
       <template is="dom-repeat" items="[[nodes]]" as="node">
-        <li>[[node.title]]</li>
+        <li>[[node.title]][[node.x]]</li>
       </template>
     </ul>
   </template>
@@ -29,43 +29,34 @@
         return {
           nodes: {
             type: Object,
-            observer: '_nodesChanged'
+            notify: true
           },
           links: {
             type: Object
           }
         };
       }
+      static get observers() {
+        return [
+          '_nodesChanged(nodes.splices)'
+        ]
+      }
 
-      _nodesChanged(newValue, oldValue) {
-        if (oldValue && this.d3) this.update(newValue, oldValue);
+      _nodesChanged(e) {
+        console.log('e: ', e);
       }
 
       update(newValue, oldValue){
-        console.log(newValue, oldValue);
-        //this.svg.data(newValue);
       }
 
       dblclick() {
-
-        var point = this.d3.mouse(this);
-                console.log("dblclick", this.d3, this);
+        var point = d3.mouse(this);
+        this.push('nodes', {x: point[0], y: point[1]});
 			}
-
-      foo() {
-        console.log("fffffffffffffffffffffffffff");
-      }
-
-      connectedCallback() {
-        super.connectedCallback();
-
-      }
 
       ready() {
         super.ready();
-        this.d3 = window.d3;
-        this.svg = this.d3.select(this.$.svg);
-        //this.svg.on("dblclick", this.dblclick());
+        this.svg = d3.select(this.$.svg).on("dblclick", this.dblclick.bind(this));
       }
 
     }
