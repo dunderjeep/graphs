@@ -48,11 +48,11 @@
       }
     }
   },
-  "_release": "02839ab1ac",
+  "_release": "05c18aedae",
   "_resolution": {
     "type": "branch",
     "branch": "2.0-preview",
-    "commit": "02839ab1acf6364803f4c79f8419ab7ee8a1a67b"
+    "commit": "05c18aedae398a5205f57539348b125a52106585"
   },
   "_source": "https://github.com/PolymerElements/iron-ajax.git",
   "_target": "2.0-preview",

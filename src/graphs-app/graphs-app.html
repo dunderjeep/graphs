@@ -70,7 +70,6 @@
 
       _nodesChanged(e) {
         if (e) {
-          this.simulation.data(this.nodes);
           this.node = this.node.data(this.nodes);
           this.node.exit().remove();
           var nodeEnter = this.node.enter()
@@ -83,7 +82,10 @@
                  .on("drag", this.dragged.bind(this))
                  .on("end", this.dragended.bind(this)));
           this.node = this.node.merge(nodeEnter);
-          console.log('graphs-app: ', this.node);
+
+          this.simulation.nodes(this.nodes);
+          //this.simulation.force("link").links(links);
+          this.simulation.alpha(1).restart();
         }
 
       }
@@ -129,10 +131,9 @@
 
       ticked() {
         this.node.select("circle")
-          .attr("cx", function(d) { return d.x; })
+          .attr("cx", function(d) { console.log(d.x, d); return d.x; })
           .attr("cy", function(d) { return d.y; });
 
-        console.log("ticked");
         // node.select("path")
         //   .data(voronoi.polygons(node.data()))
         //   .attr("d", function(d) { return d == null ? null : "M" + d.join("L") + "Z"; });

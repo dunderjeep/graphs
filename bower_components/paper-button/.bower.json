@@ -56,11 +56,11 @@
     }
   },
   "ignore": [],
-  "_release": "5339eebf82",
+  "_release": "3239421207",
   "_resolution": {
     "type": "branch",
     "branch": "2.0-preview",
-    "commit": "5339eebf82d0c0f5aba063358f2eb8474ba596cf"
+    "commit": "3239421207903eac18534bb36dde51d28fdda77c"
   },
   "_source": "https://github.com/PolymerElements/paper-button.git",
   "_target": "2.0-preview",

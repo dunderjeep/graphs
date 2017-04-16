@@ -18,10 +18,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
+  <!-- Promise polyfill needed for 1.0-hybrid mode since neither iron-request 2.x nor
+    webcomponentsjs 0.x include the Promise polyfill. -->
+  <link rel="import" href="../../promise-polyfill/promise-polyfill-lite.html">
   <link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
   <link rel="import" href="../../iron-icons/iron-icons.html">
   <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
-  <!-- <link rel="import" href="../../iron-list/iron-list.html"> -->
+  <link rel="import" href="../../iron-list/iron-list.html">
   <link rel="import" href="../../iron-ajax/iron-ajax.html">
   <link rel="import" href="../app-scroll-effects/app-scroll-effects.html">
   <link rel="import" href="../app-header/app-header.html">
@@ -64,11 +67,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         iron-list {
           background-color: var(--paper-grey-200, #eee);
           padding-bottom: 16px;
-          @apply(--layout-flex);
+          @apply --layout-flex;
         }
 
         .item {
-          @apply(--layout-horizontal);
+          @apply --layout-horizontal;
 
           margin: 16px 16px 0 16px;
           padding: 20px;
@@ -88,8 +91,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         .pad {
           padding: 0 16px;
-          @apply(--layout-flex);
-          @apply(--layout-vertical);
+          @apply --layout-flex;
+          @apply --layout-vertical;
         }
 
         .primary {

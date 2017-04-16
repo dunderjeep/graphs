@@ -25,10 +25,10 @@
   },
   "devDependencies": {
     "paper-styles": "PolymerElements/paper-styles#2.0-preview",
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.5",
+    "iron-component-page": "PolymerElements/iron-component-page#2.0-preview",
     "test-fixture": "PolymerElements/test-fixture#^3.0.0-rc.1",
-    "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.6"
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.6",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.5"
   },
   "variants": {
     "1.x": {
@@ -46,20 +46,14 @@
     }
   },
   "ignore": [],
-  "resolutions": {
-    "webcomponentsjs": "v1.0.0-rc.5",
-    "polymer": "^2.0.0-rc.1",
-    "paper-styles": "2.0-preview",
-    "iron-flex-layout": "2.0-preview"
-  },
-  "homepage": "https://github.com/PolymerElements/marked-element",
-  "_release": "8db6a38372",
+  "homepage": "https://github.com/polymerelements/marked-element",
+  "_release": "c59e7162e9",
   "_resolution": {
     "type": "branch",
     "branch": "2.0-preview",
-    "commit": "8db6a38372a08b174ca1cd806ba6f55dd0e829f9"
+    "commit": "c59e7162e93e90fb364eb660185e914172fe18a9"
   },
-  "_source": "https://github.com/PolymerElements/marked-element.git",
+  "_source": "https://github.com/polymerelements/marked-element.git",
   "_target": "2.0-preview",
-  "_originalSource": "PolymerElements/marked-element"
+  "_originalSource": "polymerelements/marked-element"
 }

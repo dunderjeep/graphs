@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "paper-styles": "polymerelements/paper-styles#2.0-preview",
-    "test-fixture": "PolymerElements/test-fixture#^3.0.0-rc.1",
     "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.6",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.1"
   },
@@ -33,18 +32,17 @@
       },
       "devDependencies": {
         "paper-styles": "polymerelements/paper-styles#^1.0.0",
-        "test-fixture": "PolymerElements/test-fixture#^1.0.0",
         "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0",
         "web-component-tester": "Polymer/web-component-tester#^4.0.0"
       }
     }
   },
   "main": "iron-media-query.html",
-  "_release": "6dc49cdc2b",
+  "_release": "3549cbb4f2",
   "_resolution": {
     "type": "branch",
     "branch": "2.0-preview",
-    "commit": "6dc49cdc2b7e7fc3d531bc26fa053a3175076e06"
+    "commit": "3549cbb4f2a01848ecf5edea67b6817accca1f04"
   },
   "_source": "https://github.com/PolymerElements/iron-media-query.git",
   "_target": "2.0-preview",

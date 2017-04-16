@@ -15,19 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
 
-  <script>
-    // override edge's URL Implementation
-    try {
-      var href = new URL('http://www.google.com/?foo bar').href;
-      if (href !== 'http://www.google.com/?foo%20bar') {
-        window.forceJURL = true;
-      }
-    } catch (e) {
-      window.forceJURL = true;
-    }
-  </script>
-  <script src="../../url/url.js"></script>
-
+  <link rel="import" href="url-import.html">
   <link rel="import" href="../../polymer/polymer.html">
   <link rel="import" href="../../promise-polyfill/promise-polyfill.html">
   <link rel="import" href="../iron-location.html">
@@ -87,18 +75,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <script>
   'use strict';
-
-  // IE baseURI workaround
-  function getBaseURI() {
-    var baseURI = document.baseURI;
-
-    if (!baseURI) {
-      var baseTags = document.getElementsByTagName('base');
-      baseURI = baseTags.length ? baseTags[0].href : document.URL;
-    }
-
-    return baseURI;
-  }
 
   function timePasses(ms) {
     return new Promise(function(resolve) {
@@ -461,6 +437,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
 
       test('of the query portion of the URL', function() {
+        expect(window.location.search).to.not.be.equal('?redirectedTo');
         var redirector = fixture('RedirectQuery');
         expect(window.location.search).to.be.equal('?redirectedTo');
         expect(redirector.query).to.be.equal('redirectedTo');
@@ -504,12 +481,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     suite('with a base URI', function() {
       var baseElem;
       setup(function() {
-        expect(getBaseURI()).to.be.equal(window.location.href);
+        expect(document.baseURI).to.be.equal(window.location.href);
         baseElem = document.createElement('base');
         var href = 'https://example.com/i/dont/exist/obviously'
         baseElem.href = href;
         document.head.appendChild(baseElem);
-        expect(getBaseURI()).to.be.equal(href);
+        expect(document.baseURI).to.be.equal(href);
       });
       teardown(function() {
         document.head.removeChild(baseElem);

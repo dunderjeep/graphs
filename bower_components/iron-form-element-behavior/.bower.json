@@ -22,7 +22,6 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#2.0-preview",
     "paper-styles": "PolymerElements/paper-styles#2.0-preview",
-    "test-fixture": "PolymerElements/test-fixture#^3.0.0-rc.1",
     "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.6",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.1"
   },
@@ -34,7 +33,6 @@
       "devDependencies": {
         "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
         "paper-styles": "PolymerElements/paper-styles#^1.0.0",
-        "test-fixture": "PolymerElements/test-fixture#^1.0.0",
         "web-component-tester": "^4.0.0",
         "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
       }
@@ -42,11 +40,11 @@
   },
   "ignore": [],
   "homepage": "https://github.com/PolymerElements/iron-form-element-behavior",
-  "_release": "e5975d6a19",
+  "_release": "73df16b5f5",
   "_resolution": {
     "type": "branch",
     "branch": "2.0-preview",
-    "commit": "e5975d6a19af0744b2b6ebfe3c24b5d565b09e9e"
+    "commit": "73df16b5f5d95ddd4aa8bf9abb492fb3ca48bbc4"
   },
   "_source": "https://github.com/PolymerElements/iron-form-element-behavior.git",
   "_target": "2.0-preview",

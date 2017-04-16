@@ -50,11 +50,11 @@
       }
     }
   },
-  "_release": "cee2cbe33d",
+  "_release": "c57d262aa7",
   "_resolution": {
     "type": "branch",
     "branch": "2.0-preview",
-    "commit": "cee2cbe33df5174cb05d47e3dab160c9cad498ba"
+    "commit": "c57d262aa7b2bdd00dd295368fc3a59ceebbe6af"
   },
   "_source": "https://github.com/PolymerElements/iron-doc-viewer.git",
   "_target": "2.0-preview",

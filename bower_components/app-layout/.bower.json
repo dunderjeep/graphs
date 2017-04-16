@@ -16,7 +16,7 @@
     "iron-media-query": "PolymerElements/iron-media-query#2.0-preview",
     "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#2.0-preview",
     "iron-scroll-target-behavior": "PolymerElements/iron-scroll-target-behavior#2.0-preview",
-    "polymer": "Polymer/polymer#^2.0.0-rc.1"
+    "polymer": "Polymer/polymer#^2.0.0-rc.3"
   },
   "devDependencies": {
     "font-roboto": "PolymerElements/font-roboto#^1.0.0",
@@ -34,8 +34,9 @@
     "paper-spinner": "PolymerElements/paper-spinner#2.0-preview",
     "paper-styles": "PolymerElements/paper-styles#2.0-preview",
     "paper-tabs": "PolymerElements/paper-tabs#2.0-preview",
+    "promise-polyfill": "polymerlabs/promise-polyfill#2.0-preview",
     "test-fixture": "PolymerElements/test-fixture#^3.0.0-rc.1",
-    "web-component-tester": "Polymer/web-component-tester#^6.0.0-prerelease.6",
+    "web-component-tester": "^6.0.0-prerelease.6",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.1"
   },
   "variants": {
@@ -57,11 +58,11 @@
   },
   "ignore": [],
   "private": true,
-  "_release": "d1aa650ded",
+  "_release": "b221f9956a",
   "_resolution": {
     "type": "branch",
     "branch": "2.0-preview",
-    "commit": "d1aa650dedf5ca3f1ef29c390f02b0b8ef93330e"
+    "commit": "b221f9956a077298b95af8981e28b38c508d5e48"
   },
   "_source": "https://github.com/PolymerElements/app-layout.git",
   "_target": "2.0-preview",
