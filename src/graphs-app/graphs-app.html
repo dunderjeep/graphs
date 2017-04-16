@@ -72,10 +72,16 @@
 	    }
     </style>
     <firebase-query
-      id="query"
+      id="queryNodes"
       app-name="graphs"
       path="/users/[[user.uid]]/nodes"
       data="{{nodes}}">
+    </firebase-query>
+    <firebase-query
+      id="queryLinks"
+      app-name="graphs"
+      path="/users/[[user.uid]]/links"
+      data="{{links}}">
     </firebase-query>
     <svg id="svg" class="svg"></svg>
     <div>
@@ -90,13 +96,16 @@
         return {
           nodes: {
             type: Array
+          },
+          links: {
+            type: Array
           }
         };
       }
 
       static get observers() {
         return [
-          '_nodesChanged(nodes.splices)'
+          '_nodesChanged(nodes.splices)', '_nodesChanged(links.splices)'
         ]
       }
 
@@ -122,8 +131,14 @@
                  .on("end", this.dragended.bind(this)));
           this.node = this.node.merge(nodeEnter);
 
+          this.link = this.link.data(this.links);
+          this.link = this.link.enter().append("line")
+            .attr("class", "link")
+            .merge(this.link);
+          this.link.exit().remove();
+
           this.simulation.nodes(this.nodes);
-          //this.simulation.force("link").links(links);
+          this.simulation.force("link").links(this.links);
           this.simulation.alpha(1).restart();
         }
 
@@ -131,7 +146,7 @@
 
       dblclick() {
         var point = d3.mouse(this);
-        this.$.query.ref.push({
+        this.$.queryNodes.ref.push({
           x: point[0], y: point[1]
         });
       }
@@ -144,9 +159,7 @@
         d3.select(this).raise().classed("active", false);
       }
 
-
       dragstarted(d) {
-        //d3.select(this).raise().classed("active", true);
         if (!d3.event.active) this.simulation.alphaTarget(0.3).restart();
         d.fx = d.x;
         d.fy = d.y;
@@ -159,7 +172,6 @@
       }
 
       dragended(d) {
-        //d3.select(this).classed("active", false);
         if (!d3.event.active) this.simulation.alphaTarget(0);
         d.fx = null;
         d.fy = null;
@@ -168,8 +180,7 @@
       ready() {
         super.ready();
         this.svg = d3.select(this.$.svg).on("dblclick", this.dblclick.bind(this));
-        var width = +this.svg.attr("width");
-        var height = +this.svg.attr("height");
+        this.link = this.svg.append("g").attr("class", "links").selectAll(".link");
         this.node = this.svg.append("g").attr("class", "nodes").selectAll(".node");
         this.simulation = d3.forceSimulation(this.nodes)
           .force("charge", d3.forceManyBody().strength(-10))
@@ -196,12 +207,11 @@
         this.node.select("text")
           .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")" });
 
-        // svg.selectAll(".link")
-        //   .attr("x1",function(d) { return d.source.x; } )
-        //   .attr("y1", function(d) { return d.source.y; })
-        //   .attr("x2", function(d) { return d.target.x; })
-        //   .attr("y2", function(d) { return d.target.y; });
-
+        this.link.select("line")
+          .attr("x1",function(d) { return d.source.x; } )
+          .attr("y1", function(d) { return d.source.y; })
+          .attr("x2", function(d) { return d.target.x; })
+          .attr("y2", function(d) { return d.target.y; });
       }
 
       signin() {
