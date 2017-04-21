@@ -29,6 +29,7 @@
 				border: 1px solid #888;
         width: 960px;
         height: 500px;
+        /*pointer-events: all;*/
 			}
 
 			circle {
@@ -37,7 +38,7 @@
 			}
 
 			path {
-	      pointer-events: all;
+	      /*pointer-events: all;*/
 	      fill: none;
 	      stroke: #666;
 	      stroke-opacity: 0.2;
@@ -57,6 +58,15 @@
 	      stroke-width: 1.5px;
 	    }
 
+      .link {
+        /*pointer-events: all;*/
+      }
+
+      .active.link {
+        stroke: rebeccapurple;
+	      stroke-width: 2;
+      }
+
       .delete circle {
         fill: red;
         r: 5px;
@@ -70,6 +80,7 @@
 	    .links {
 	      stroke: #000;
 	      stroke-width: 1.5;
+        pointer-events: all;
 	    }
 
 	    .nodes {
@@ -143,12 +154,15 @@
                  .on("end", this.dragended.bind(this)));
           this.node = this.node.merge(nodeEnter);
 
-          this.link = this.svg.select(".links").selectAll(".link").data(this.links);
-          //this.link = this.link.data(this.links);
+          this.link = this.link.data(this.links);
+          this.link.exit().remove();
           this.link = this.link.enter().append("line")
             .attr("class", "link")
+            .on("mouseover", this.mouseoverLink.bind(this))
+            .on("mouseout", this.mouseoutLink.bind(this))
+            .on("click", this.clickLink)
             .merge(this.link);
-          this.link.exit().remove();
+
 
           this.simulation.nodes(this.nodes);
           this.simulation.force("link").links(this.links);
@@ -250,13 +264,29 @@
 
       mouseover(graph, node, i, e) {
         //console.log(graph, node, i, e);
-        var _node = d3.select(e[i]).raise().classed("active", true);
+        d3.select(e[i]).raise().classed("active", true);
         graph.activeNode = e[i];
         //console.log(graph.activeNode);
       }
 
       mouseout(d) {
         d3.select(this).raise().classed("active", false);
+      }
+
+      clickLink(d) {
+        console.log("clickLink", d, this);
+      }
+
+      mouseoverLink(graph, node, i, e) {
+        console.log(this, graph, node, i, e);
+        d3.select(i[node]).raise().classed("active", true);
+        graph.activeLink = i[node];
+        //console.log(graph.activeNode);
+      }
+
+      mouseoutLink(graph, node, i, e) {
+
+        d3.select(i[node]).raise().classed("active", false)
       }
 
       dragstarted(d) {
@@ -282,6 +312,7 @@
         this.svg = d3.select(this.$.svg).on("dblclick", this.dblclick.bind(this));
         d3.select('body').on("keydown", this.keydown.bind(this));
         this.activeNode;
+        this.activeLink;
         this.link = this.svg.append("g").attr("class", "links").selectAll(".link");
         this.node = this.svg.append("g").attr("class", "nodes").selectAll(".node");
         this.simulation = d3.forceSimulation(this.nodes)
