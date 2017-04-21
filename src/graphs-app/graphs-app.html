@@ -214,28 +214,29 @@
           //   x: point[0], y: point[1]
           // });
         }
+
         if (d3.event.key == "l") {
           var _node = d3.select(this.activeNode).data()[0].$key;
           //var foo = this.$.queryNodes.ref.equalTo(_node);
           console.log(_node, this.source);
 
-          if (!!this.source && this.source != _node ) {
-            this.target = _node;
-            this.$.queryLinks.ref.push({
-              source: this.source, target: _node
-            });
-            console.log(this.source, this.target);
-            this.svg.select(".source").raise().classed("source", false);
-            this.target = null;
-            this.source = null;
+          if (!!this.source) {
+            if (this.source === _node) {
+              this.svg.select(".source").raise().classed("source", false);
+              this.source = null;
+            } else {
+              this.target = _node;
+              this.$.queryLinks.ref.push({
+                source: this.source, target: _node
+              });
+              this.svg.select(".source").raise().classed("source", false);
+              this.target = null;
+              this.source = null;
+            }
           } else {
-            this.source = _node;
-            d3.select(this.activeNode).raise().classed("source", true);
+              this.source = _node;
+              d3.select(this.activeNode).raise().classed("source", true);
           }
-
-          // this.$.queryNodes.ref.push({
-          //   x: point[0], y: point[1]
-          // });
         }
 
         if (d3.event.code == "Space") {
